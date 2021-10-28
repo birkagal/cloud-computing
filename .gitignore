@@ -28,9 +28,16 @@ output/
 #Gradle
 .gradle
 */.gradle
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
 
 # Logging
 *.log
 *.log.gz
 *.log-*.gz
 logs/
+
+# Metadata
+.metadata
