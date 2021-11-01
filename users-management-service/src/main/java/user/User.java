@@ -1,17 +1,20 @@
 package user;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import exception.InvalidInputException;
 
 public class User {
+
 	private String email;
 	private UserName name;
 	private String password;
-	private ArrayList<String> roles;
 	private String birthdate;
+	private ArrayList<String> roles;
 
 	public User() {
 	}
@@ -21,18 +24,12 @@ public class User {
 	}
 
 	public void setEmail(String email) {
-		Pattern valid_email_regex = Pattern.compile("[A-Z0-9_.]+@([A-Z0-9]+\\.)+[A-Z0-9]{2,6}$",
-				Pattern.CASE_INSENSITIVE);
-		if (email == null) // If user doesn't have email
-			throw new InvalidInputException("Email can't be null"); // Users must have email
-
-		Matcher matcher = valid_email_regex.matcher(email);
-
-		if (!matcher.find())
+		// Validate email is valid format: name@domain.tld
+		if (!Pattern.compile("[A-Z0-9_.]+@([A-Z0-9]+\\.)+[A-Z0-9]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(email)
+				.find())
 			throw new InvalidInputException("Invalid email: " + email);
-		
-		this.email = email;
 
+		this.email = email;
 	}
 
 	public UserName getName() {
@@ -48,29 +45,13 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		Pattern passPattern = Pattern.compile("\\p{Nd}");
-		if(password.length()<5)
-			throw new InvalidInputException("Password must contain at least five characters");
-		//Matcher matcher = passPattern.matcher(password);
-
-		if (!passPattern.matcher(password).find())
-			throw new InvalidInputException("Password must contain at least one number");
+		if (password.length() < 5)
+			throw new InvalidInputException("Password must contain at least 5 characters.");
+		// Validate password has at least 1 digit in it
+		if (!Pattern.compile("\\p{Nd}").matcher(password).find())
+			throw new InvalidInputException("Password must contain at least one digit.");
 
 		this.password = password;
-	}
-
-
-	public ArrayList<String> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(ArrayList<String> roles) {
-		if(roles.isEmpty())
-			throw new InvalidInputException("User must have at least one roll");
-		for (String role:roles)
-			if(role.isEmpty())
-				throw new InvalidInputException("Role cannot be empty");
-		this.roles = roles;
 	}
 
 	public String getBirthdate() {
@@ -78,15 +59,37 @@ public class User {
 	}
 
 	public void setBirthdate(String birthdate) {
-		Pattern passPattern = Pattern.compile( "^(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\\d\\d$" );
-		if (!passPattern.matcher(birthdate).find())
-			throw new InvalidInputException("Invalid Birthdate");
+		/*
+		 * In order to validate birthdate, we try to convert it to LocalDate with custom
+		 * formatter: dd-MM-yyyy. If the parsing failed (throw exception) the input is
+		 * not in the correct format.
+		 */
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			LocalDate.parse(birthdate, formatter);
+		} catch (DateTimeParseException e) {
+			throw new InvalidInputException("Invalid birthdate: " + birthdate);
+		}
 		this.birthdate = birthdate;
+	}
+
+	public ArrayList<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(ArrayList<String> roles) {
+		if (roles.isEmpty())
+			throw new InvalidInputException("Roles must have at least one element.");
+		this.roles = new ArrayList<>();
+		for (String role : roles)
+			// Add role to roles if its valid (non empty string)
+			if (!role.isEmpty())
+				this.roles.add(role);
 	}
 
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", name=" + name + ", password=" + password + ", roles=" + roles
-				+ ", birthdate=" + birthdate + "]";
+		return "User [email=" + email + ", name=" + name + ", password=" + password + ", birthdate=" + birthdate
+				+ ", roles=" + roles + "]";
 	}
 }

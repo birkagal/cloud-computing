@@ -3,6 +3,7 @@ package user;
 import exception.InvalidInputException;
 
 public class UserName {
+
 	private String first;
 	private String last;
 
@@ -14,8 +15,9 @@ public class UserName {
 	}
 
 	public void setFirst(String first) {
-		if(first.isEmpty())
-			throw new InvalidInputException("First name cannot be empty");
+		if (first.isEmpty())
+			throw new InvalidInputException("First name cannot be empty.");
+
 		this.first = first;
 	}
 
@@ -24,8 +26,9 @@ public class UserName {
 	}
 
 	public void setLast(String last) {
-		if(last.isEmpty())
-			throw new InvalidInputException("Last name cannot be empty");
+		if (last.isEmpty())
+			throw new InvalidInputException("Last name cannot be empty.");
+
 		this.last = last;
 	}
 

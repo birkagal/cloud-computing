@@ -3,10 +3,11 @@ package user;
 import java.util.ArrayList;
 
 public class UserWithoutPassowrd {
+
 	private String email;
 	private UserName name;
-	private ArrayList<String> roles;
 	private String birthdate;
+	private ArrayList<String> roles;
 
 	public UserWithoutPassowrd() {
 	}
@@ -27,6 +28,13 @@ public class UserWithoutPassowrd {
 		this.name = name;
 	}
 
+	public String getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
 
 	public ArrayList<String> getRoles() {
 		return roles;
@@ -36,17 +44,8 @@ public class UserWithoutPassowrd {
 		this.roles = roles;
 	}
 
-	public String getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
-	}
-
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", name=" + name + ", roles=" + roles
-				+ ", birthdate=" + birthdate + "]";
+		return "User [email=" + email + ", name=" + name + ", birthdate=" + birthdate + ", roles=" + roles + "]";
 	}
 }

@@ -7,9 +7,8 @@ public interface UserService {
 	public UserWithoutPassowrd get(String email);
 
 	public UserWithoutPassowrd login(String email, String password);
-	
-	public void updateUser(String email,UserWithoutPassowrd updatedUser);
-	
-	public void deleteAll();
 
+	public void update(String email, User updatedUser);
+
+	public void delete();
 }
