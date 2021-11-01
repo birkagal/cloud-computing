@@ -1,62 +1,87 @@
 package user;
 
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import exception.InvalidInputException;
+import exception.UnauthorizedLoginException;
+import exception.UserExistException;
 
 @Service
 public class UserServiceImplementation implements UserService {
-	private String producerUrl;
-	private RestTemplate restTemplate;
 	private Log log = LogFactory.getLog(UserServiceImplementation.class);
-	
-	@Value("${dependency.service.key-value-store.url}")
-	public void setProducerUrl(String producerUrl) {
-		this.producerUrl = producerUrl;
-	}
-	
-	@PostConstruct
-	public void init() {
-		this.restTemplate = new RestTemplate();
-	}
-	
+	private ArrayList<User> DB = new ArrayList<User>();
+
 	@Override
-	public User store(User newUser) {
-		this.log.debug("sending user to producer service: " + newUser);
-		
-		KeyUserPairBoundary userWithKey = this.restTemplate
-			.postForObject(
-				this.producerUrl, 
-				newUser, KeyUserPairBoundary.class);
-		
-		this.log.debug("received from producer service: " + userWithKey);
-		return newUser;
+	public UserWithoutPassowrd store(User newUser) {
+		this.log.debug("Adding user to database: " + newUser);
+		for (User user : DB) {
+			if (user.getEmail().equals(newUser.getEmail())) {
+				throw new UserExistException("Email already exist: " + newUser.getEmail());
+			}
+		}
+		DB.add(newUser);
+		UserWithoutPassowrd rv = new UserWithoutPassowrd();
+		rv.setEmail(newUser.getEmail());
+		rv.setBirthdate(newUser.getBirthdate());
+		rv.setName(newUser.getName());
+		rv.setRoles(newUser.getRoles());
+		return rv;
 	}
-	
+
 	@Override
-	public User get(String email) {
-		return null;
-//		this.log.debug("requesting user with email to producer service: " + email);
-//		
-//		KeyUserPairBoundary userWithKey = this.restTemplate
-//			.getForObject(
-//				this.producerUrl + "/{key}", 
-//				KeyUserPairBoundary.class, key);
-//		
-//		this.log.debug("received from producer service: " + personWithKey);
-//		
-//		User rv = new User();
-//		rv.setBirthdate(personWithKey.getValue().getBirthdate());
-//		rv.setName(personWithKey.getValue().getName());
-//		rv.setId(personWithKey.getKey());
-//
-//		this.log.trace("sending back to consumer: " + rv);
-//		
-//		return rv;
+	public UserWithoutPassowrd get(String email) {
+		this.log.debug("requesting user with email to producer service: " + email);
+		UserWithoutPassowrd rv = new UserWithoutPassowrd();
+		for (User user : DB) {
+			if (user.getEmail().equals(email)) {
+				rv.setEmail(user.getEmail());
+				rv.setBirthdate(user.getBirthdate());
+				rv.setName(user.getName());
+				rv.setRoles(user.getRoles());
+				return rv;
+			}
+		}
+		throw new InvalidInputException("User does not exist with this email: " + email);
+	}
+
+	@Override
+	public UserWithoutPassowrd login(String email, String password) {
+		UserWithoutPassowrd rv = new UserWithoutPassowrd();
+		for (User user : DB) {
+			if (user.getEmail().equals(email)) {
+				if (user.getPassword().equals(password)) {
+					rv.setEmail(user.getEmail());
+					rv.setBirthdate(user.getBirthdate());
+					rv.setName(user.getName());
+					rv.setRoles(user.getRoles());
+					return rv;
+				} else
+					throw new UnauthorizedLoginException("Incorrect Email or Password");
+			}
+		}
+		throw new UnauthorizedLoginException("Email does not exist");
+	}
+
+	@Override
+	public void deleteAll() {
+		DB.clear();
+	}
+
+	@Override
+	public void updateUser(String email ,UserWithoutPassowrd updatedUser) {
+		for (User user : DB) {
+			if (user.getEmail().equals(email)) {
+				user.setBirthdate(updatedUser.getBirthdate());
+				user.setName(updatedUser.getName());
+				user.setRoles(updatedUser.getRoles());
+				return;
+			}
+		}
+		throw new InvalidInputException("User does not exist");
+
 	}
 
 }
