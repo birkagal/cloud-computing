@@ -1,5 +1,6 @@
 package management.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,6 +24,7 @@ public class ServiceUtil {
 		UserEntity entity = new UserEntity();
 		entity.setEmail(boundary.getEmail());
 		entity.setPassword(boundary.getPassword());
+
 		entity.setBirthdate(boundary.getBirthdate());
 
 		// User name format: FirstName$LastName
@@ -37,7 +39,8 @@ public class ServiceUtil {
 		UserBoundary boundary = new UserBoundary();
 		boundary.setEmail(entity.getEmail());
 		boundary.setPassword(entity.getPassword());
-		boundary.setBirthdate(entity.getBirthdate());
+		DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		boundary.setBirthdate(entity.getBirthdate().format(formatters));
 
 		// UserEntity name format is: FirstName$LastName
 		String[] splittedUserName = entity.getName().split("\\$");
