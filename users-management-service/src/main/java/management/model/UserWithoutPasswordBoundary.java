@@ -1,15 +1,18 @@
-package user;
+package management.model;
 
 import java.util.ArrayList;
 
-public class UserWithoutPassowrd {
-
+public class UserWithoutPasswordBoundary {
+	/*
+	 * There are no input validation here because this class in only used to convert
+	 * (the validated) User objects
+	 */
 	private String email;
 	private UserName name;
 	private String birthdate;
 	private ArrayList<String> roles;
 
-	public UserWithoutPassowrd() {
+	public UserWithoutPasswordBoundary() {
 	}
 
 	public String getEmail() {

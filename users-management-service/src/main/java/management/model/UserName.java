@@ -1,13 +1,18 @@
-package user;
+package management.model;
 
-import exception.InvalidInputException;
+import management.exception.InvalidInputException;
 
-public class UserName {
+public class UserName implements Comparable<UserName> {
 
 	private String first;
 	private String last;
 
 	public UserName() {
+	}
+
+	public UserName(String first, String last) {
+		this.setFirst(first);
+		this.setLast(last);
 	}
 
 	public String getFirst() {
@@ -35,5 +40,12 @@ public class UserName {
 	@Override
 	public String toString() {
 		return "UserName [first=" + first + ", last=" + last + "]";
+	}
+
+	@Override
+	public int compareTo(UserName o) {
+		// Compare two user names based on last name. If equal compare on first name
+		int lastNameCompare = this.getLast().compareTo(o.getLast());
+		return lastNameCompare == 0 ? this.getFirst().compareTo(o.getFirst()) : lastNameCompare;
 	}
 }

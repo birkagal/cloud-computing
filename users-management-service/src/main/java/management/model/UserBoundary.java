@@ -1,4 +1,4 @@
-package user;
+package management.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -6,9 +6,9 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import exception.InvalidInputException;
+import management.exception.InvalidInputException;
 
-public class User {
+public class UserBoundary {
 
 	private String email;
 	private UserName name;
@@ -16,7 +16,7 @@ public class User {
 	private String birthdate;
 	private ArrayList<String> roles;
 
-	public User() {
+	public UserBoundary() {
 	}
 
 	public String getEmail() {
@@ -68,7 +68,7 @@ public class User {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			LocalDate.parse(birthdate, formatter);
 		} catch (DateTimeParseException e) {
-			throw new InvalidInputException("Invalid birthdate: " + birthdate);
+			throw new InvalidInputException("Invalid birthdate: " + birthdate + " Enter in format dd-MM-yyyy.");
 		}
 		this.birthdate = birthdate;
 	}
