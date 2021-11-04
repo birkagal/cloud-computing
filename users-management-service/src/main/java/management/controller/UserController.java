@@ -1,7 +1,5 @@
 package management.controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,7 +42,7 @@ public class UserController {
 		return this.userService.login(email, password);
 	}
 
-	@RequestMapping(path = "/users/{email}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/users/{email}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void updateUser(@PathVariable("email") String email, @RequestBody UserBoundary updatedUser) {
 		this.userService.update(email, updatedUser);
 	}

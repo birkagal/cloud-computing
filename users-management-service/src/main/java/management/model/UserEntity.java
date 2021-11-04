@@ -2,15 +2,12 @@ package management.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import management.exception.InvalidInputException;
 
 @Entity
 @Table(name = "USERS")
@@ -56,13 +53,9 @@ public class UserEntity {
 	}
 
 	public void setBirthdate(String birthdate) {
-		try {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			this.birthdate = LocalDate.parse(birthdate, formatter);
-		} catch (DateTimeParseException e) {
-			throw new InvalidInputException("Invalid birthdate: " + birthdate + " Enter in format dd-MM-yyyy.");
-		}
-		
+		// Birthdate is already validated in UserBoundary, no need to validate again
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		this.birthdate = LocalDate.parse(birthdate, formatter);
 	}
 
 	public String getRoles() {

@@ -20,42 +20,37 @@ public class ServiceUtil {
 		this.jackson = new ObjectMapper();
 	}
 
-	public UserEntity convertFromBoundary(UserBoundary boundary) {
+	public UserEntity fromBoundary(UserBoundary boundary) {
 		UserEntity entity = new UserEntity();
 		entity.setEmail(boundary.getEmail());
 		entity.setPassword(boundary.getPassword());
-
 		entity.setBirthdate(boundary.getBirthdate());
 
-		// User name format: FirstName$LastName
+		// UserEntity name format: FirstName$LastName
 		entity.setName(boundary.getName().getFirst() + "$" + boundary.getName().getLast());
-
-		String roles = this.marshal(boundary.getRoles());
-		entity.setRoles(roles);
+		entity.setRoles(marshal(boundary.getRoles()));
 		return entity;
 	}
 
-	public UserBoundary convertToBoundary(UserEntity entity) {
+	public UserBoundary toBoundary(UserEntity entity) {
 		UserBoundary boundary = new UserBoundary();
 		boundary.setEmail(entity.getEmail());
 		boundary.setPassword(entity.getPassword());
-		DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		boundary.setBirthdate(entity.getBirthdate().format(formatters));
+		boundary.setBirthdate(entity.getBirthdate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
-		// UserEntity name format is: FirstName$LastName
+		// UserEntity name format: FirstName$LastName
 		String[] splittedUserName = entity.getName().split("\\$");
-		UserName userName = new UserName(splittedUserName[0], splittedUserName[1]);
-		boundary.setName(userName);
+		boundary.setName(new UserName(splittedUserName[0], splittedUserName[1]));
 
-		// Found unmarshaling arraylist method here:
+		// Found unmarshaling ArrayList method here:
 		// https://www.baeldung.com/jackson-collection-array
-		ArrayList<String> roles = this.unmarshal(entity.getRoles(), new TypeReference<ArrayList<String>>() {
+		ArrayList<String> roles = unmarshal(entity.getRoles(), new TypeReference<ArrayList<String>>() {
 		});
 		boundary.setRoles(roles);
 		return boundary;
 	}
 
-	public UserWithoutPasswordBoundary convertToNoPassword(UserBoundary user) {
+	public UserWithoutPasswordBoundary toNoPassword(UserBoundary user) {
 		UserWithoutPasswordBoundary userWithoutPassword = new UserWithoutPasswordBoundary();
 		userWithoutPassword.setEmail(user.getEmail());
 		userWithoutPassword.setBirthdate(user.getBirthdate());

@@ -67,10 +67,10 @@ public class UserBoundary {
 		try {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			LocalDate.parse(birthdate, formatter);
+			this.birthdate = birthdate;
 		} catch (DateTimeParseException e) {
 			throw new InvalidInputException("Invalid birthdate: " + birthdate + " Enter in format dd-MM-yyyy.");
 		}
-		this.birthdate = birthdate;
 	}
 
 	public ArrayList<String> getRoles() {
@@ -80,6 +80,7 @@ public class UserBoundary {
 	public void setRoles(ArrayList<String> roles) {
 		if (roles.isEmpty())
 			throw new InvalidInputException("Roles must have at least one element.");
+
 		this.roles = new ArrayList<>();
 		for (String role : roles)
 			// Add role to roles if its valid (non empty string)
