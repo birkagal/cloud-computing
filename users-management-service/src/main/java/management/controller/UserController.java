@@ -1,5 +1,8 @@
 package management.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +27,14 @@ public class UserController {
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
+	}
+
+	@RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> getHome() {
+		Map<String, Object> rv = new HashMap<>();
+		rv.put("Homepage",
+				"Welcome to the Users Management Service. This project was developed under Cloud Computing course at Afeka College of Engineering. Please visit /swagger-ui.html for visual ui of the API.");
+		return rv;
 	}
 
 	@RequestMapping(path = "/users", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
