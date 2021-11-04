@@ -3,6 +3,7 @@ package management.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -146,6 +147,9 @@ public class UserServiceImplementation implements UserService {
 			entities = pageOfEntities.getContent();
 			break;
 		case "byemaildomain":
+			if (!Pattern.compile("@([A-Z0-9]+\\.)+[A-Z0-9]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(criteriaValue)
+					.find())
+				throw new InvalidInputException("Invalid Domain: " + criteriaValue);
 			entities = this.userDAO.findAllByEmailContaining(criteriaValue,
 					PageRequest.of(page, size, Sort.Direction.fromString(sortOrder), sortBy));
 			break;
