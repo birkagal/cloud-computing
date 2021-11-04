@@ -20,7 +20,7 @@ import management.service.UserService;
 @RestController
 public class UserController {
 
-	private UserService userService;;
+	private UserService userService;
 
 	@Autowired
 	public UserController(UserService userService) {
