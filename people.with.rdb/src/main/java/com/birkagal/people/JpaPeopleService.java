@@ -1,4 +1,4 @@
-package people;
+package com.birkagal.people;
 
 import java.time.ZoneId;
 import java.util.ArrayList;
