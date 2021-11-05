@@ -1,20 +1,11 @@
 package com.birkagal.management.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.birkagal.management.model.UserBoundary;
 import com.birkagal.management.model.UserWithoutPasswordBoundary;
 import com.birkagal.management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -26,16 +17,6 @@ public class UserController {
     public UserController(UserService userService) {
         super();
         this.userService = userService;
-    }
-
-    @RequestMapping(path = "/",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Object> getHome() {
-        Map<String, Object> rv = new HashMap<>();
-        rv.put("Homepage",
-                "Welcome to the Users Management Service. This project was developed under Cloud Computing course at Afeka College of Engineering. Please visit /swagger-ui.html for visual ui of the API.");
-        return rv;
     }
 
     @RequestMapping(path = "/users",
