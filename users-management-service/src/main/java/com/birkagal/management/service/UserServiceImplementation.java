@@ -10,6 +10,7 @@ import com.birkagal.management.model.UserWithoutPasswordBoundary;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -120,6 +121,17 @@ public class UserServiceImplementation implements UserService {
 
         // Convert updated user to entity and store in database
         this.userDAO.save(util.fromBoundary(user));
+    }
+
+    @Override
+    @Transactional
+    public void delete(String email) {
+        try {
+            this.userDAO.deleteById(email);
+            this.log.debug("Succsesfully deleted user with email: " + email);
+        } catch (EmptyResultDataAccessException e) {
+            throw new UserDoesntExistException("There is no user with that email: " + email);
+        }
     }
 
     @Override
