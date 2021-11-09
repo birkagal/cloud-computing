@@ -49,12 +49,6 @@ public class UserController {
         this.userService.update(email, updatedUser);
     }
 
-    @RequestMapping(path = "/users/{email}",
-            method = RequestMethod.DELETE)
-    public void deleteAll(@PathVariable("email") String email) {
-        this.userService.delete(email);
-    }
-
     @RequestMapping(path = "/users",
             method = RequestMethod.DELETE)
     public void deleteAll() {

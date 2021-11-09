@@ -13,8 +13,6 @@ public interface UserService {
 
     void update(String email, UserBoundary updatedUser);
 
-    void delete(String email);
-
     void deleteAll();
 
     UserWithoutPasswordBoundary[] getAllFiltered(String criteriaType, String criteriaValue, int size, int page,

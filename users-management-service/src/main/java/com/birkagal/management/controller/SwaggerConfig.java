@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SwaggerConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
-        /* Default homepage is SwaggerUI
+        /* Default homepage to SwaggerUI
          * source: https://sterl.org/2021/05/spring-boot-redirect-to-swaggerui/ */
         registry.addRedirectViewController("/", "/swagger-ui.html");
         registry.addRedirectViewController("/swagger-ui", "/swagger-ui.html");

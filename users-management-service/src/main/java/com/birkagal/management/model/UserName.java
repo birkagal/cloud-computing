@@ -1,6 +1,5 @@
 package com.birkagal.management.model;
 
-
 import com.birkagal.management.exception.InvalidInputException;
 
 public class UserName implements Comparable<UserName> {

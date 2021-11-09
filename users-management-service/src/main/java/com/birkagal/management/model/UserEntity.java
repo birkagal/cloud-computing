@@ -1,13 +1,8 @@
 package com.birkagal.management.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "USERS")
@@ -54,8 +49,7 @@ public class UserEntity {
 
     public void setBirthdate(String birthdate) {
         // Birthdate is already validated in UserBoundary, no need to validate again
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.birthdate = LocalDate.parse(birthdate, formatter);
+        this.birthdate = LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
     public String getRoles() {

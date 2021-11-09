@@ -10,7 +10,6 @@ import com.birkagal.management.model.UserWithoutPasswordBoundary;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -125,17 +124,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     @Transactional
-    public void delete(String email) {
-        try {
-            this.userDAO.deleteById(email);
-            this.log.debug("Succsesfully deleted user with email: " + email);
-        } catch (EmptyResultDataAccessException e) {
-            throw new UserDoesntExistException("There is no user with that email: " + email);
-        }
-    }
-
-    @Override
-    @Transactional
     public void deleteAll() {
         this.log.debug("Users database cleared.");
         this.userDAO.deleteAll();
@@ -178,9 +166,9 @@ public class UserServiceImplementation implements UserService {
                 // In order to match birthdate in given year, check if its between first day and
                 // last day of the year
                 LocalDate instance = LocalDate.now().withYear(Integer.parseInt(criteriaValue));
-                LocalDate firstDay = instance.with(firstDayOfYear());
-                LocalDate lastDay = instance.with(lastDayOfYear());
-                entities = this.userDAO.findAllByBirthdateBetween(firstDay, lastDay,
+                entities = this.userDAO.findAllByBirthdateBetween(
+                        instance.with(firstDayOfYear()),
+                        instance.with(lastDayOfYear()),
                         PageRequest.of(page, size, Sort.Direction.fromString(sortOrder), sortBy));
                 break;
             case "byrole":
