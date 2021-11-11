@@ -172,7 +172,7 @@ public class UserServiceImplementation implements UserService {
                         PageRequest.of(page, size, Sort.Direction.fromString(sortOrder), sortBy));
                 break;
             case "byrole":
-                entities = this.userDAO.findAllByRolesContaining(criteriaValue,
+                entities = this.userDAO.findAllByRolesContaining("\"" + criteriaValue + "\"",
                         PageRequest.of(page, size, Sort.Direction.fromString(sortOrder), sortBy));
                 break;
             default:
