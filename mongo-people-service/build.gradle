@@ -13,8 +13,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.7'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.7'
+
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+    implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.7'
 }
 
 test {
