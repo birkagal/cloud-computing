@@ -30,22 +30,23 @@ public class UserController {
     @RequestMapping(path = "/users/{email}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserWithoutPasswordBoundary get(@PathVariable("email") String email) {
+    public UserWithoutPasswordBoundary get(String email) {
         return this.userService.get(email);
     }
 
     @RequestMapping(path = "/users/login/{email}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserWithoutPasswordBoundary login(@PathVariable("email") String email,
-                                             @RequestParam(name = "password", required = false, defaultValue = "") String password) {
+    public UserWithoutPasswordBoundary login(String email,
+                                             @RequestParam(required = false, defaultValue = "") String password) {
         return this.userService.login(email, password);
     }
 
     @RequestMapping(path = "/users/{email}",
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateUser(@PathVariable("email") String email, @RequestBody UserBoundary updatedUser) {
+    public void updateUser(String email,
+                           @RequestBody UserBoundary updatedUser) {
         this.userService.update(email, updatedUser);
     }
 
@@ -59,12 +60,12 @@ public class UserController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public UserWithoutPasswordBoundary[] getAll(
-            @RequestParam(name = "criteriaType", required = false, defaultValue = "") String criteriaType,
-            @RequestParam(name = "criteriaValue", required = false, defaultValue = "") String criteriaValue,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size,
-            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "sortBy", required = false, defaultValue = "email") String sortBy,
-            @RequestParam(name = "sortOrder", required = false, defaultValue = "ASC") String sortOrder) {
+            @RequestParam(required = false, defaultValue = "") String criteriaType,
+            @RequestParam(required = false, defaultValue = "") String criteriaValue,
+            @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "email") String sortBy,
+            @RequestParam(required = false, defaultValue = "ASC") String sortOrder) {
         return this.userService.getAllFiltered(criteriaType, criteriaValue, size, page, sortBy, sortOrder);
     }
 }
