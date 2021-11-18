@@ -3,39 +3,39 @@ package com.birkagal.people.model;
 import java.time.LocalDate;
 
 public class Person {
-	private String id;
-	private String name;
-	private LocalDate birthdate;
-	
-	public Person() {
-	}
+    private String id;
+    private String name;
+    private LocalDate birthdate;
 
-	public String getId() {
-		return id;
-	}
+    public Person() {
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public LocalDate getBirthdate() {
-		return birthdate;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setBirthdate(LocalDate birthdate) {
-		this.birthdate = birthdate;
-	}
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
 
-	@Override
-	public String toString() {
-		return "Person [id=" + id + ", name=" + name + ", birthdate=" + birthdate + "]";
-	}
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    @Override
+    public String toString() {
+        return "Person [id=" + id + ", name=" + name + ", birthdate=" + birthdate + "]";
+    }
 }
