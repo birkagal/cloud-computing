@@ -18,7 +18,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux:2.5.6'
 
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-webflux-ui
-    implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.12'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-webflux-ui', version: '1.5.12'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
     testImplementation 'io.projectreactor:reactor-test:3.4.12'
