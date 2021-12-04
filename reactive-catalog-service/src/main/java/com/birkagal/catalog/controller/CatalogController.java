@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 
 @RestController
-public class CatalogController {
+public class CatalogController   {
 
     private final CatalogServiceImplementation catalog;
 
