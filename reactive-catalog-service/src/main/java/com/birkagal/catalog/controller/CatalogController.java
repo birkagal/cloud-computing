@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 
 @RestController
-public class CatalogController   {
+public class CatalogController {
 
     private final CatalogServiceImplementation catalog;
 
@@ -47,6 +47,14 @@ public class CatalogController   {
                 .store(newProduct);
     }
 
+    @RequestMapping(path = "/shopping/products/{productId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ProductBoundary> getById(@PathVariable("productId") String productId) {
+        return this.catalog
+                .getById(productId);
+    }
+
     @RequestMapping(path = "/shopping/products",
             method = RequestMethod.GET,
             produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -57,13 +65,5 @@ public class CatalogController   {
             @RequestParam(required = false, defaultValue = "id") String sortBy) {
         return this.catalog
                 .getAllFiltered(filterType, filterValue, sortOrder, sortBy);
-    }
-
-    @RequestMapping(path = "/shopping/products/{productId}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<ProductBoundary> getById(@PathVariable String productId) {
-        return this.catalog
-                .getById(productId);
     }
 }

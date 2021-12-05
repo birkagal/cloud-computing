@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.0'
+    id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -15,12 +15,12 @@ repositories {
 dependencies {
     // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive:2.5.6'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.5.6'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.6.1'
 
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-webflux-ui
     implementation group: 'org.springdoc', name: 'springdoc-openapi-webflux-ui', version: '1.5.12'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.1'
     testImplementation 'io.projectreactor:reactor-test:3.4.12'
 }
 
