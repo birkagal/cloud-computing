@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 @Service
 public class WishlistServiceImplementation implements WishListService {
@@ -47,6 +48,11 @@ public class WishlistServiceImplementation implements WishListService {
         if (wishList.getName() == null || wishList.getName().isEmpty()
                 || wishList.getUserEmail() == null || wishList.getUserEmail().isEmpty())
             throw new RuntimeException("Please provide Name and userEmail.");
+
+        if (!Pattern.compile("[A-Z0-9_.]+@([A-Z0-9]+\\.)+[A-Z0-9]{2,6}$",
+                Pattern.CASE_INSENSITIVE).matcher(wishList.getUserEmail()).find()) {
+            throw new RuntimeException("Please provide a valid email address");
+        }
 
         return Mono.just(wishList)
                 .map(boundary -> {
