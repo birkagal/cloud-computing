@@ -21,8 +21,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.6'
     runtimeOnly 'org.postgresql:postgresql:42.3.1'
 
-    // H2 for development
-    runtimeOnly 'com.h2database:h2'
+
+
+    // Admin process: Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
